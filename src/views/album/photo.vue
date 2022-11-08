@@ -538,7 +538,7 @@
   }
   .photo-img {
     width: 100%;
-    height: 7rem;
+    height: 18rem;
     border-radius: 4px;
   }
   .photo-name {

@@ -149,6 +149,15 @@
             />
           </el-select>
         </el-form-item>
+        <!-- 商品价格 -->
+        <el-form-item label="商品价格">
+          <el-input
+            v-model="article.price"
+            placeholder="请填写商品价格"
+          >
+            {{ article.price }}}
+          </el-input>
+        </el-form-item>
         <!-- 文章类型 -->
         <el-form-item label="原文地址" v-if="article.type != 1">
           <el-input
@@ -211,6 +220,7 @@
       if (!isNaN(this.$route.params.id)) {
         this.axios.get("/article/core/articleList/" + this.$route.params.id).then(({ data }) => {
           this.article = data.data.article;
+          console.log("this.article", this.article)
         });
       }else {
         const article = sessionStorage.getItem("article");
@@ -256,6 +266,7 @@
           categoryName: null,
           tagNameList: [],
           originalUrl: "",
+          price: 0,
           top: 0,
           type: 1,
           status: 1
@@ -352,7 +363,7 @@
         }
         this.article.status = 3;
         this.axios.post("/article/core/saveOrUpdateArticle", this.article).then(({ data }) => {
-          if (data.code === 2000) {
+          if (data.code === 200) {
             this.$notify.success({
               title: "成功",
               message: "保存草稿成功"

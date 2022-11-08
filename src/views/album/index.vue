@@ -186,7 +186,7 @@
         this.addOrEdit = true;
       },
       checkPhoto(item) {
-        this.$router.push({ path: "/album/albums/" + item.id });
+        this.$router.push({ path: "/albums/" + item.id });
       },
       checkDelete() {
         this.$router.push({ path: "/photos/delete" });

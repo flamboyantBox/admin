@@ -175,34 +175,21 @@
           </el-tag>
         </template>
       </el-table-column>
-      <!-- 文章浏览量 -->
+      <!-- 商品价格 -->
       <el-table-column
         prop="viewsCount"
-        label="浏览量"
-        width="70"
+        label="商品价格(￥)"
+        width="120"
         align="center"
       >
         <template slot-scope="scope">
-          <span v-if="scope.row.viewsCount">
-            {{ scope.row.viewsCount }}
+          <span v-if="scope.row.price">
+            {{ scope.row.price }}
           </span>
           <span v-else>0</span>
         </template>
       </el-table-column>
-      <!-- 文章点赞量 -->
-      <el-table-column
-        prop="likeCount"
-        label="点赞量"
-        width="70"
-        align="center"
-      >
-        <template slot-scope="scope">
-          <span v-if="scope.row.likeCount">
-            {{ scope.row.likeCount }}
-          </span>
-          <span v-else>0</span>
-        </template>
-      </el-table-column>
+
       <!-- 文章类型 -->
       <el-table-column prop="type" label="类型" width="80" align="center">
         <template slot-scope="scope">

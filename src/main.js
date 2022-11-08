@@ -10,6 +10,7 @@ import router from './router'
 import '@/icons' // icon
 import '@/permission' // permission control
 import '@/icons/index.js'
+import ECharts from "vue-echarts";
 import "echarts/lib/chart/line";
 import "echarts/lib/chart/pie";
 import "echarts/lib/chart/bar";
@@ -26,24 +27,23 @@ import config from "./utils/config";
 import VueAxios from "vue-axios";
 import dayjs from "dayjs";
 import qs from "qs";
-import NProgress from "nprogress";
-
-if (process.env.NODE_ENV === 'production') {
-  const { mockXHR } = require('../mock')
-  mockXHR()
-}
+import VueCalendarHeatmap from "vue-calendar-heatmap";
+import tagCloud from "./components/tag-cloud";
 
 // set ElementUI lang to EN
 Vue.use(ElementUI, { locale });
 // 如果想要中文版 element-ui，按如下方式声明
 // Vue.use(ElementUI)
+Vue.component("v-chart", ECharts);
 Vue.prototype.config = config;
+Vue.use(VueCalendarHeatmap);
+Vue.use(tagCloud);
 Vue.use(VueAxios, axios);
-Vue.prototype.$axios = axios
-Vue.config.productionTip = false
+Vue.prototype.$axios = axios;
+Vue.config.productionTip = false;
 Vue.use(mavonEditor);
 Vue.prototype.$moment = dayjs;
-Vue.prototype.$qs = qs
+Vue.prototype.$qs = qs;
 
 Vue.filter("date", function(value, formatStr = "YYYY-MM-DD") {
   return dayjs(value).format(formatStr);

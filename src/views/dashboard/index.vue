@@ -123,7 +123,6 @@
     },
     data: function() {
       return {
-        loading: true,
         type: 1,
         viewsCount: 0,
         messageCount: 0,
@@ -175,7 +174,7 @@
             }
           ]
         },
-        ariticleRank: {
+        articleRank: {
           tooltip: {
             trigger: "axis",
             axisPointer: {
@@ -297,21 +296,22 @@
     },
     methods: {
       getData() {
-        this.axios.get("/api/admin").then(({ data }) => {
-          this.viewsCount = data.data.viewsCount;
-          this.messageCount = data.data.messageCount;
-          this.userCount = data.data.userCount;
-          this.articleCount = data.data.articleCount;
-          this.articleStatisticsList = data.data.articleStatisticsList;
-          if (data.data.uniqueViewDTOList != null) {
-            data.data.uniqueViewDTOList.forEach(item => {
+        this.axios.get("/websiteConfig/core/blogBackInfo").then(res => {
+          this.viewsCount = res.data.data.blogBackInfo.viewsCount;
+          this.messageCount = res.data.data.blogBackInfo.messageCount;
+          this.userCount = res.data.data.blogBackInfo.userCount;
+          this.articleCount = res.data.data.blogBackInfo.articleCount;
+          this.articleStatisticsList = res.data.data.blogBackInfo.articleStatisticsList;
+
+          if (res.data.data.blogBackInfo.uniqueViewDTOList != null) {
+            res.data.data.blogBackInfo.uniqueViewDTOList.forEach(item => {
               this.viewCount.xAxis.data.push(item.day);
               this.viewCount.series[0].data.push(item.viewsCount);
             });
           }
 
-          if (data.data.categoryDTOList != null) {
-            data.data.categoryDTOList.forEach(item => {
+          if (res.data.data.blogBackInfo.categoryDTOList != null) {
+            res.data.data.blogBackInfo.categoryDTOList.forEach(item => {
               this.category.series[0].data.push({
                 value: item.articleCount,
                 name: item.categoryName
@@ -320,15 +320,15 @@
             });
           }
 
-          if (data.data.articleRankDTOList != null) {
-            data.data.articleRankDTOList.forEach(item => {
+          if (res.data.data.blogBackInfo.articleRankDTOList != null) {
+            res.data.data.blogBackInfo.articleRankDTOList.forEach(item => {
               this.ariticleRank.series[0].data.push(item.viewsCount);
               this.ariticleRank.xAxis.data.push(item.articleTitle);
             });
           }
 
-          if (data.data.tagDTOList != null) {
-            data.data.tagDTOList.forEach(item => {
+          if (res.data.data.blogBackInfo.tagDTOList != null) {
+            res.data.data.blogBackInfo.tagDTOList.forEach(item => {
               this.tagDTOList.push({
                 id: item.id,
                 name: item.tagName
@@ -347,7 +347,7 @@
             }
           })
           .then(({ data }) => {
-            this.userAreaMap.series[0].data = data.data;
+            this.userAreaMap.series[0].data = res.data.data.blogBackInfo;
           });
       }
     },
