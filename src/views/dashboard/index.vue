@@ -70,7 +70,7 @@
         <el-card>
           <div class="e-title">文章浏览量排行</div>
           <div style="height:350px">
-            <v-chart :options="ariticleRank" v-loading="loading" />
+            <v-chart :options="articleRank" v-loading="loading" />
           </div>
         </el-card>
       </el-col>
@@ -123,7 +123,7 @@
     },
     data: function() {
       return {
-        type: 1,
+        type: 2,
         viewsCount: 0,
         messageCount: 0,
         userCount: 0,
@@ -297,6 +297,7 @@
     methods: {
       getData() {
         this.axios.get("/websiteConfig/core/blogBackInfo").then(res => {
+          console.log("res", res)
           this.viewsCount = res.data.data.blogBackInfo.viewsCount;
           this.messageCount = res.data.data.blogBackInfo.messageCount;
           this.userCount = res.data.data.blogBackInfo.userCount;
@@ -321,9 +322,10 @@
           }
 
           if (res.data.data.blogBackInfo.articleRankDTOList != null) {
+            console.log("start111")
             res.data.data.blogBackInfo.articleRankDTOList.forEach(item => {
-              this.ariticleRank.series[0].data.push(item.viewsCount);
-              this.ariticleRank.xAxis.data.push(item.articleTitle);
+              this.articleRank.series[0].data.push(item.viewsCount);
+              this.articleRank.xAxis.data.push(item.articleTitle);
             });
           }
 
@@ -341,13 +343,13 @@
       },
       listUserArea() {
         this.axios
-          .get("/api/admin/users/area", {
+          .get("/userAuth/core/area", {
             params: {
               type: this.type
             }
-          })
-          .then(({ data }) => {
-            this.userAreaMap.series[0].data = res.data.data.blogBackInfo;
+          }).then(({ data }) => {
+          console.log("area", data)
+            this.userAreaMap.series[0].data = data.data.area;
           });
       }
     },
